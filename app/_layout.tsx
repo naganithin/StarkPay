@@ -1,24 +1,47 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import ConnectScreen from "./ConnectScreen";
+import HomeScreen from "./homeScreen";
+import PayScreen from "./PayScreen";
+import SwapScreen from "./SwapScreen";
+import { ChipiProvider } from "@chipi-stack/chipi-expo";
+import { ClerkProvider } from "@clerk/clerk-expo";
+import { tokenCache } from "@clerk/clerk-expo/token-cache";
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+const CHIPI_API_KEY = "pk_dev_abcb14b0e896cee77f3a33e2ed9e71ce";
+const CLERK_PUBLISHABLE_KEY = "pk_test_c3BsZW5kaWQtcmhpbm8tOTYuY2xlcmsuYWNjb3VudHMuZGV2JA";
+console.log("CHIPI_API_KEY",CHIPI_API_KEY);
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+
+if (!CHIPI_API_KEY) throw new Error("EXPO_PUBLIC_CHIPI_API_KEY is not set");
+if (!CLERK_PUBLISHABLE_KEY) throw new Error("EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY is not set");
+
+const Stack = createStackNavigator();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
+      <ChipiProvider
+        config={{
+          apiPublicKey: CHIPI_API_KEY!, 
+        }}
+      >
+          <Stack.Navigator initialRouteName="Entry">
+            <Stack.Screen
+              name="Entry"
+              component={ConnectScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{ title: "BitStark Home" }}
+            />
+            <Stack.Screen name="SwapScreen" component={SwapScreen} />
+        <Stack.Screen name="PayScreen" component={PayScreen} />
+          </Stack.Navigator>
+      </ChipiProvider>
+    </ClerkProvider>
   );
 }
