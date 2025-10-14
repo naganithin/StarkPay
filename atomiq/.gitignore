@@ -1,0 +1,6 @@
+node_modules/
+dist/
+*.key
+*.sqlite3
+package-lock.json
+.idea/

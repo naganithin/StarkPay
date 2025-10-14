@@ -1,0 +1,26 @@
+{
+  "name": "test-atomiq-sdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js --trace-warnings"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@atomiqlabs/chain-solana": "^11.0.0",
+    "@atomiqlabs/chain-starknet": "^5.1.4",
+    "@atomiqlabs/sdk": "^6.0.0",
+    "@atomiqlabs/storage-sqlite": "^3.0.0",
+    "@coral-xyz/anchor": "^0.29.0",
+    "@solana/spl-token": "^0.3.11",
+    "@solana/web3.js": "^1.98.2",
+    "starknet": "^7.6.2",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.18",
+    "typescript": "^5.8.2"
+  }
+}
