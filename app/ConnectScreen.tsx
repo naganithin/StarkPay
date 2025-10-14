@@ -27,7 +27,7 @@ export default function ConnectScreen({ navigation }: any) {
   const handleConnect = async () => {
     try {
       const response = await request("wallet_connect", {
-        addresses: [AddressPurpose.Payment],
+        addresses: [AddressPurpose.Payment, AddressPurpose.Starknet, AddressPurpose.Ordinals, AddressPurpose.Spark],
         message: "Connect BitStark to your Xverse Wallet",
         network: BitcoinNetworkType.Testnet,
       });
@@ -48,6 +48,15 @@ export default function ConnectScreen({ navigation }: any) {
 
         Alert.alert("Connected", `BTC Address: ${btcAddress}`);
         console.log(`BTC Address: ${btcAddress}`);
+
+        
+const response2 = await request('getBalance', undefined);
+
+if (response2.status === 'success') {
+  console.log(response2.result);
+} else {
+  console.error(response2.error);
+}
 
         const token = await getToken();
         console.log("token = ", token);

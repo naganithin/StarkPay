@@ -76,7 +76,7 @@ export default function HomeScreen({ route, navigation }: any) {
           style={[styles.actionButton, { backgroundColor: "#3b82f6" }]}
           onPress={() => navigation.navigate("SwapScreen")}
         >
-          <Text style={styles.buttonText}>Swap</Text>
+          <Text style={styles.buttonText}>Vault</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

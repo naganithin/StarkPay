@@ -4,7 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ConnectScreen from "./ConnectScreen";
 import HomeScreen from "./homeScreen";
 import PayScreen from "./PayScreen";
-import SwapScreen from "./SwapScreen";
 import { ChipiProvider } from "@chipi-stack/chipi-expo";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
@@ -38,7 +37,6 @@ export default function RootLayout() {
               component={HomeScreen}
               options={{ title: "BitStark Home" }}
             />
-            <Stack.Screen name="SwapScreen" component={SwapScreen} />
         <Stack.Screen name="PayScreen" component={PayScreen} />
           </Stack.Navigator>
       </ChipiProvider>
