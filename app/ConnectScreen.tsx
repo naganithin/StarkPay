@@ -1,5 +1,8 @@
 import { useCreateWallet } from "@chipi-stack/chipi-expo";
-import { useAuth, useSignIn } from "@clerk/clerk-expo";
+// import { useAuth, useSignIn } from "@clerk/clerk-expo";
+import { useAuth,useSignIn } from "@clerk/clerk-react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { log } from "console";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -10,9 +13,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage"; 
-import { AddressPurpose, BitcoinNetworkType, request, RpcErrorCode } from "sats-connect";
-import { Platform } from "react-native";
+// import { AddressPurpose, BitcoinNetworkType, request, RpcErrorCode } from "sats-connect";
+import { request, AddressPurpose, BitcoinNetworkType, RpcErrorCode } from "sats-connect";
+
 
 export default function ConnectScreen({ navigation }: any) {
   const {
@@ -23,6 +26,8 @@ export default function ConnectScreen({ navigation }: any) {
   const { isSignedIn, getToken } = useAuth();
   const { signIn, setActive } = useSignIn();
   const [pin, setPin] = useState("1234");
+
+
 
   const handleConnect = async () => {
     try {
@@ -46,19 +51,13 @@ export default function ConnectScreen({ navigation }: any) {
           return;
         }
 
+        await AsyncStorage.setItem("btcAddress", btcAddress);
+
         Alert.alert("Connected", `BTC Address: ${btcAddress}`);
         console.log(`BTC Address: ${btcAddress}`);
 
-        
-const response2 = await request('getBalance', undefined);
-
-if (response2.status === 'success') {
-  console.log(response2.result);
-} else {
-  console.error(response2.error);
-}
-
         const token = await getToken();
+
         console.log("token = ", token);
 
         if (!token) {
@@ -76,12 +75,14 @@ if (response2.status === 'success') {
         });
         console.log("Wallet", wallet.walletPublicKey);
         console.log("JSON wallet = ",JSON.stringify(wallet));
-        
-        
 
-      await AsyncStorage.setItem("wallet", wallet.walletPublicKey);
-      await AsyncStorage.setItem("wallet_txHash", wallet.txHash);
-      await AsyncStorage.setItem("wallet_encryptedPrivateKey", wallet.wallet.encryptedPrivateKey);
+        // Save individual wallet fields
+        await AsyncStorage.setItem("wallet", wallet.walletPublicKey);
+        await AsyncStorage.setItem("wallet_txHash", wallet.txHash);
+        await AsyncStorage.setItem("wallet_encryptedPrivateKey", wallet.wallet.encryptedPrivateKey);
+
+        // Save the full generated wallet
+        await AsyncStorage.setItem("generatedWallet", JSON.stringify(wallet));
 
         navigation.replace("Home");
       } else {

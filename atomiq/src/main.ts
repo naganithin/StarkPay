@@ -32,7 +32,7 @@ const swapper = Factory.newSwapper({
             rpcUrl: starknetRpc
         }
     },
-    bitcoinNetwork: BitcoinNetwork.TESTNET4,
+    bitcoinNetwork: BitcoinNetwork.TESTNET,
 
     // By default the SDK uses browser storage, so we need to explicitly specify the sqlite storage for NodeJS, these lines are not required in browser environment
     swapStorage: chainId => new SqliteUnifiedStorage("CHAIN_"+chainId+".sqlite3"),

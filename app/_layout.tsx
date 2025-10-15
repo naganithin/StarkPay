@@ -5,8 +5,12 @@ import ConnectScreen from "./ConnectScreen";
 import HomeScreen from "./homeScreen";
 import PayScreen from "./PayScreen";
 import { ChipiProvider } from "@chipi-stack/chipi-expo";
-import { ClerkProvider } from "@clerk/clerk-expo";
+// import { ClerkProvider } from "@clerk/clerk-expo";
+import { Platform } from "react-native";
+import * as SecureStore from "expo-secure-store";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
+import { ClerkProvider } from '@clerk/clerk-react'
+
 
 const CHIPI_API_KEY = "pk_dev_abcb14b0e896cee77f3a33e2ed9e71ce";
 const CLERK_PUBLISHABLE_KEY = "pk_test_c3BsZW5kaWQtcmhpbm8tOTYuY2xlcmsuYWNjb3VudHMuZGV2JA";
@@ -20,7 +24,7 @@ const Stack = createStackNavigator();
 
 export default function RootLayout() {
   return (
-    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
+    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} >
       <ChipiProvider
         config={{
           apiPublicKey: CHIPI_API_KEY!, 

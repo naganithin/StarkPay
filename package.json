@@ -16,6 +16,7 @@
     "@atomiqlabs/storage-sqlite": "^3.0.0",
     "@chipi-stack/chipi-expo": "^11.2.0",
     "@clerk/clerk-expo": "^2.16.0",
+    "@clerk/clerk-react": "^5.52.0",
     "@expo/vector-icons": "^15.0.2",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/bottom-tabs": "^7.4.0",
